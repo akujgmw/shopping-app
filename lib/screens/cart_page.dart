@@ -30,7 +30,7 @@ class _CartPageState extends State<CartPage> {
 
   Future<void> _deleteCartItem(int id) async {
     await DatabaseHelper.instance.deleteCartItem(id);
-    _loadCartItems(); // Reload cart items to reflect the deletion
+    _loadCartItems();
   }
 
   void _showCheckoutDialog() {
@@ -48,15 +48,14 @@ class _CartPageState extends State<CartPage> {
           actions: <Widget>[
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
+                Navigator.of(context).pop();
               },
               child: const Text('No', style: TextStyle(color: Colors.grey)),
             ),
             ElevatedButton(
               onPressed: () {
-                // Simulate a successful checkout
-                Navigator.of(context).pop(); // Close the dialog
-                _showSuccessDialog(); // Show success message
+                Navigator.of(context).pop();
+                _showSuccessDialog();
               },
               child: const Text('Yes'),
             ),
@@ -81,7 +80,7 @@ class _CartPageState extends State<CartPage> {
           actions: <Widget>[
             ElevatedButton(
               onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
+                Navigator.of(context).pop();
               },
               child: const Text('OK'),
             ),
