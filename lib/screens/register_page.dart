@@ -27,7 +27,6 @@ class _RegisterPageState extends State<RegisterPage> {
         password: _passwordController.text.trim(),
       );
 
-      // Show success message
       showDialog(
         context: context,
         builder: (BuildContext context) {

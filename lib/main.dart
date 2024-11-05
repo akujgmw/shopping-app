@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shopping_app/screens/account_page.dart';
+import 'package:shopping_app/screens/cart_page.dart';
+import 'package:shopping_app/screens/detail_page.dart';
 import 'package:shopping_app/screens/home_page.dart';
 import 'package:shopping_app/screens/login_page.dart';
 import 'package:shopping_app/screens/register_page.dart';
+import 'package:shopping_app/screens/settings_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,9 +42,20 @@ class MyApp extends StatelessWidget {
             '/login': (context) => LoginPage(),
             '/register': (context) => RegisterPage(),
             '/home': (context) => HomePage(),
-            // '/detail': (context) => DetailPage(),
-            // '/cart': (context) => CartPage(),
-            // '/settings': (context) => SettingsPage(),
+            '/detail': (context) => const DetailPage(),
+            '/account': (context) => AccountPage(),
+            '/settings': (context) => SettingsPage(),
+            '/cart': (context) => CartPage(),
+          },
+          onGenerateRoute: (settings) {
+            if (settings.name == '/detail') {
+              final item = settings.arguments as Map<String, dynamic>;
+              return MaterialPageRoute(
+                builder: (context) => DetailPage(),
+                settings: RouteSettings(arguments: item),
+              );
+            }
+            return null;
           },
         );
       },
