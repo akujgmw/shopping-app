@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "525042691644",
+    "project_id": "shopping-app-d570a",
+    "storage_bucket": "shopping-app-d570a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:525042691644:android:13a2240a543467dbe7dd39",
+        "android_client_info": {
+          "package_name": "com.example.shopping_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyi2WY4QPz7uVMGzabD5_JHtYDgqjQ19U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
