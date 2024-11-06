@@ -54,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Shopping App',
+              'Ergown Fashion',
               style: TextStyle(
                 fontSize: 36,
                 fontWeight: FontWeight.bold,

@@ -139,7 +139,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: Color(0xFFD9F2F9),
         title: const Text(
-          'Shopping App',
+          'Ergown Fashion',
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
         actions: [

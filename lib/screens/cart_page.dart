@@ -33,7 +33,7 @@ class _CartPageState extends State<CartPage> {
     _loadCartItems();
   }
 
-  void _showCheckoutDialog() {
+  void _showCheckoutDialog(String itemName, int itemId) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -43,8 +43,8 @@ class _CartPageState extends State<CartPage> {
           ),
           title: const Text('Checkout',
               style: TextStyle(fontWeight: FontWeight.bold)),
-          content: const Text('Would you like to proceed to checkout?',
-              style: TextStyle(fontSize: 16)),
+          content: Text('Would you like to proceed to checkout for $itemName?',
+              style: const TextStyle(fontSize: 16)),
           actions: <Widget>[
             TextButton(
               onPressed: () {
@@ -53,9 +53,12 @@ class _CartPageState extends State<CartPage> {
               child: const Text('No', style: TextStyle(color: Colors.grey)),
             ),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 Navigator.of(context).pop();
+                await DatabaseHelper.instance.deleteCartItem(itemId);
+                _loadCartItems();
                 _showSuccessDialog();
+                // Here, you can also implement the logic to process the checkout for the specific item
               },
               child: const Text('Yes'),
             ),
@@ -126,31 +129,30 @@ class _CartPageState extends State<CartPage> {
                           title: Text(item['name'],
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold)),
-                          subtitle: Text('\$${item['price']}',
+                          subtitle: Text('${item['price']}',
                               style: const TextStyle(color: Colors.grey)),
-                          trailing: IconButton(
-                            icon: const Icon(Icons.delete, color: Colors.red),
-                            onPressed: () {
-                              _deleteCartItem(item['id']);
-                            },
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  _showCheckoutDialog(item['name'], item['id']);
+                                },
+                                child: const Text('Checkout',
+                                    style: TextStyle(fontSize: 12)),
+                              ),
+                              IconButton(
+                                icon:
+                                    const Icon(Icons.delete, color: Colors.red),
+                                onPressed: () {
+                                  _deleteCartItem(item['id']);
+                                },
+                              ),
+                            ],
                           ),
                         ),
                       );
                     },
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: ElevatedButton(
-                    onPressed: _showCheckoutDialog,
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 15),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    child: const Text('Proceed to Checkout',
-                        style: TextStyle(fontSize: 18)),
                   ),
                 ),
               ],
