@@ -5,6 +5,7 @@ import 'package:shopping_app/screens/account_page.dart';
 import 'package:shopping_app/screens/cart_page.dart';
 import 'package:shopping_app/screens/detail_page.dart';
 import 'package:shopping_app/screens/home_page.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:shopping_app/screens/login_page.dart';
 import 'package:shopping_app/screens/register_page.dart';
 import 'package:shopping_app/screens/settings_page.dart';
@@ -12,6 +13,18 @@ import 'package:shopping_app/screens/settings_page.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  AwesomeNotifications().initialize(
+    'resource://drawable/ic_notification',
+    [
+      NotificationChannel(
+        channelKey: 'basic_channel',
+        channelName: 'Basic notifications',
+        channelDescription: 'Notification channel for basic notifications',
+        defaultColor: Colors.orange,
+        ledColor: Colors.white,
+      ),
+    ],
+  );
   runApp(const MyApp());
 }
 
