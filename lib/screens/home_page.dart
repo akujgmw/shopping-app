@@ -15,21 +15,25 @@ class _HomePageState extends State<HomePage> {
   BannerAd? _bannerAd;
   bool _isBannerAdLoaded = false;
 
-  final String adUnitId = 'ca-app-pub-6583569449969116/8600898993';
+  // Test Ad Unit ID for Banner Ads
+  final String adUnitId = 'ca-app-pub-3940256099942544/9214589741';
 
   @override
   void initState() {
     super.initState();
 
+    // Request notification permissions
     AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
       if (!isAllowed) {
         AwesomeNotifications().requestPermissionToSendNotifications();
       }
     });
 
+    // Load the banner ad
     _loadBannerAd();
   }
 
+  // Method to load the banner ad
   void _loadBannerAd() {
     _bannerAd = BannerAd(
       size: AdSize.banner,
@@ -51,7 +55,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void dispose() {
-    _bannerAd?.dispose();
+    _bannerAd?.dispose(); // Dispose of the banner ad
     super.dispose();
   }
 
