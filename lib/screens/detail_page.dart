@@ -17,8 +17,8 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
   final TextEditingController _reviewController = TextEditingController();
   double _rating = 0.0;
-  String _userEmail = 'Guest'; // Default email
-  double _averageRating = 0.0; // Variable to store the average rating
+  String _userEmail = 'Guest';
+  double _averageRating = 0.0;
 
   @override
   void initState() {
@@ -41,7 +41,7 @@ class _DetailPageState extends State<DetailPage> {
 
     final review = {
       'userId': userId,
-      'userEmail': _userEmail, // Add userEmail to the review
+      'userEmail': _userEmail,
       'productId': item['id'],
       'rating': _rating,
       'comment': _reviewController.text,
@@ -194,7 +194,6 @@ class _DetailPageState extends State<DetailPage> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    // Product Image
                     ClipRRect(
                       borderRadius: BorderRadius.circular(15),
                       child: Container(
@@ -217,7 +216,6 @@ class _DetailPageState extends State<DetailPage> {
                     ),
                     const SizedBox(height: 24),
 
-                    // Product Name
                     Text(
                       item['name'],
                       style: const TextStyle(
@@ -228,7 +226,6 @@ class _DetailPageState extends State<DetailPage> {
                     ),
                     const SizedBox(height: 12),
 
-                    // Product Price
                     Text(
                       item['price'],
                       style: const TextStyle(
@@ -240,7 +237,6 @@ class _DetailPageState extends State<DetailPage> {
                     ),
                     const SizedBox(height: 12),
 
-                    // StreamBuilder to fetch reviews and calculate average rating
                     StreamBuilder<QuerySnapshot>(
                       stream: FirebaseFirestore.instance
                           .collection('reviews')
@@ -275,7 +271,6 @@ class _DetailPageState extends State<DetailPage> {
                           );
                         }
 
-                        // Calculate average rating
                         double totalRating = 0.0;
                         for (var doc in snapshot.data!.docs) {
                           totalRating += doc['rating'];
@@ -323,7 +318,6 @@ class _DetailPageState extends State<DetailPage> {
                     ),
                     const SizedBox(height: 16),
 
-                    // StreamBuilder for Reviews
                     StreamBuilder<QuerySnapshot>(
                       stream: FirebaseFirestore.instance
                           .collection('reviews')
@@ -342,7 +336,13 @@ class _DetailPageState extends State<DetailPage> {
                               child: Text('Error loading reviews.'));
                         }
                         if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                          return const Center(child: Text('No reviews yet.'));
+                          return const Center(
+                              child: Column(
+                            children: [
+                              Text('No reviews yet.'),
+                              SizedBox(height: 15),
+                            ],
+                          ));
                         }
                         return ListView.builder(
                           shrinkWrap: true,

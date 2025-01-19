@@ -1,6 +1,7 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -11,17 +12,50 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
+  BannerAd? _bannerAd;
+  bool _isBannerAdLoaded = false;
+
+  final String adUnitId = 'ca-app-pub-6583569449969116/8600898993';
 
   @override
   void initState() {
+    super.initState();
+
     AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
       if (!isAllowed) {
         AwesomeNotifications().requestPermissionToSendNotifications();
       }
     });
-    super.initState();
+
+    _loadBannerAd();
   }
 
+  void _loadBannerAd() {
+    _bannerAd = BannerAd(
+      size: AdSize.banner,
+      adUnitId: adUnitId,
+      listener: BannerAdListener(
+        onAdLoaded: (ad) {
+          setState(() {
+            _isBannerAdLoaded = true;
+          });
+        },
+        onAdFailedToLoad: (ad, error) {
+          print("Banner ad failed to load: $error");
+          ad.dispose();
+        },
+      ),
+      request: const AdRequest(),
+    )..load();
+  }
+
+  @override
+  void dispose() {
+    _bannerAd?.dispose();
+    super.dispose();
+  }
+
+  // List of items to display in the grid
   final List<Map<String, dynamic>> items = [
     {
       'id': 0,
@@ -38,11 +72,7 @@ class _HomePageState extends State<HomePage> {
       'price': 'Rp350.000',
       'image': 'assets/gaun1.jpg',
       'description':
-          'Gaun nikah yang sederhana namun elegan, cocok untuk momen '
-              'istimewa Anda. Dilengkapi dengan detail renda yang halus dan '
-              'potongan yang pas untuk memberikan kesan anggun. Material yang '
-              'nyaman membuat gaun ini mudah dikenakan sepanjang hari. Pilihan '
-              'sempurna untuk tampil cantik dan mempesona.'
+          'Gaun nikah yang sederhana namun elegan, cocok untuk momen istimewa Anda. Dilengkapi dengan detail renda yang halus dan potongan yang pas untuk memberikan kesan anggun. Material yang nyaman membuat gaun ini mudah dikenakan sepanjang hari. Pilihan sempurna untuk tampil cantik dan mempesona.'
     },
     {
       'id': 2,
@@ -51,11 +81,7 @@ class _HomePageState extends State<HomePage> {
       'price': 'Rp400.000',
       'image': 'assets/gaun2.jpg',
       'description':
-          'Gaun nikah dengan desain klasik yang abadi. Dirancang untuk '
-              'mereka yang menyukai gaya tradisional namun tetap modern. '
-              'Gaun ini memiliki aksen bordir yang mewah dan akan memberikan '
-              'kesan romantis pada hari spesial Anda. Nyaman dikenakan sepanjang '
-              'acara dengan bahan yang lembut dan berkualitas tinggi.'
+          'Gaun nikah dengan desain klasik yang abadi. Dirancang untuk mereka yang menyukai gaya tradisional namun tetap modern. Gaun ini memiliki aksen bordir yang mewah dan akan memberikan kesan romantis pada hari spesial Anda. Nyaman dikenakan sepanjang acara dengan bahan yang lembut dan berkualitas tinggi.'
     },
     {
       'id': 3,
@@ -64,11 +90,7 @@ class _HomePageState extends State<HomePage> {
       'price': 'Rp450.000',
       'image': 'assets/gaun3.jpg',
       'description':
-          'Menonjolkan kesan mewah dengan sentuhan modern, gaun ini hadir '
-              'dengan detail perhiasan yang berkilau di bagian dada. Dirancang '
-              'untuk memberikan kesan anggun dan elegan pada saat yang sama. '
-              'Material premium membuat gaun ini terlihat mahal dan eksklusif. '
-              'Ideal bagi pengantin yang ingin tampil menawan.'
+          'Menonjolkan kesan mewah dengan sentuhan modern, gaun ini hadir dengan detail perhiasan yang berkilau di bagian dada. Dirancang untuk memberikan kesan anggun dan elegan pada saat yang sama. Material premium membuat gaun ini terlihat mahal dan eksklusif. Ideal bagi pengantin yang ingin tampil menawan.'
     },
     {
       'id': 4,
@@ -77,11 +99,7 @@ class _HomePageState extends State<HomePage> {
       'price': 'Rp500.000',
       'image': 'assets/gaun4.jpg',
       'description':
-          'Gaun yang memancarkan kemewahan dengan detail yang artistik. '
-              'Didesain khusus untuk menonjolkan lekuk tubuh dengan potongan '
-              'yang ramping. Dilengkapi dengan detail manik-manik yang indah, '
-              'gaun ini menambahkan sentuhan glamor pada penampilan Anda. '
-              'Pilihan yang tepat untuk hari pernikahan yang tak terlupakan.'
+          'Gaun yang memancarkan kemewahan dengan detail yang artistik. Didesain khusus untuk menonjolkan lekuk tubuh dengan potongan yang ramping. Dilengkapi dengan detail manik-manik yang indah, gaun ini menambahkan sentuhan glamor pada penampilan Anda. Pilihan yang tepat untuk hari pernikahan yang tak terlupakan.'
     },
     {
       'id': 6,
@@ -97,10 +115,8 @@ class _HomePageState extends State<HomePage> {
       'type': 'product',
       'price': 'Rp600.000',
       'image': 'assets/gaun5.jpg',
-      'description': 'Gaun nikah cantik yang memberikan kesan glamor dan modern. '
-          'Dibuat dengan material premium yang nyaman dan mudah bergerak. '
-          'Detail renda di seluruh gaun ini memberikan tampilan yang romantis '
-          'dan elegan. Cocok untuk pengantin yang ingin tampil mewah.'
+      'description':
+          'Gaun nikah cantik yang memberikan kesan glamor dan modern. Dibuat dengan material premium yang nyaman dan mudah bergerak. Detail renda di seluruh gaun ini memberikan tampilan yang romantis dan elegan. Cocok untuk pengantin yang ingin tampil mewah.'
     },
     {
       'id': 7,
@@ -108,10 +124,8 @@ class _HomePageState extends State<HomePage> {
       'type': 'product',
       'price': 'Rp700.000',
       'image': 'assets/gaun6.jpg',
-      'description': 'Gaun nikah yang sempurna untuk acara pernikahan formal. '
-          'Dihiasi dengan renda klasik dan potongan yang ramping untuk kesan feminin. '
-          'Bagian bawah yang mengembang menambah sentuhan anggun. '
-          'Pilihan ideal bagi pengantin yang ingin tampil klasik dan memukau.'
+      'description':
+          'Gaun nikah yang sempurna untuk acara pernikahan formal. Dihiasi dengan renda klasik dan potongan yang ramping untuk kesan feminin. Bagian bawah yang mengembang menambah sentuhan anggun. Pilihan ideal bagi pengantin yang ingin tampil klasik dan memukau.'
     },
     {
       'id': 8,
@@ -120,14 +134,11 @@ class _HomePageState extends State<HomePage> {
       'price': 'Rp750.000',
       'image': 'assets/gaun7.jpg',
       'description':
-          'Dengan desain yang elegan dan material berkualitas tinggi, gaun ini '
-              'mewakili perpaduan antara keanggunan dan kenyamanan. '
-              'Detail renda pada bagian atas dan rok yang flowy membuatnya cocok '
-              'untuk acara formal. Gaun ini dirancang untuk membuat setiap pengantin '
-              'merasa spesial di hari bahagianya.'
+          'Dengan desain yang elegan dan material berkualitas tinggi, gaun ini mewakili perpaduan antara keanggunan dan kenyamanan. Detail renda pada bagian atas dan rok yang flowy membuatnya cocok untuk acara formal. Gaun ini dirancang untuk membuat setiap pengantin merasa spesial di hari bahagianya.'
     },
   ];
 
+  // Handle bottom navigation bar item taps
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -139,6 +150,7 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  // Handle product item taps
   void _onProductTap(Map<String, dynamic> item) {
     Navigator.pushNamed(context, '/detail', arguments: item);
   }
@@ -162,77 +174,91 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: SingleChildScrollView(
-          child: StaggeredGrid.count(
-            crossAxisCount: 2,
-            mainAxisSpacing: 8,
-            crossAxisSpacing: 8,
-            children: items.map((item) {
-              return StaggeredGridTile.count(
-                crossAxisCellCount: item['type'] == 'ads' ? 2 : 1,
-                mainAxisCellCount: item['type'] == 'ads' ? 1 : 1.5,
-                child: GestureDetector(
-                  onTap: () {
-                    if (item['type'] == 'product') _onProductTap(item);
-                  },
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    elevation: 0,
-                    color: item['type'] == 'ads'
-                        ? Colors.orangeAccent
-                        : Colors.transparent,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.vertical(
-                              top: Radius.circular(10),
-                              bottom: Radius.circular(10),
-                            ),
-                            child: Image.asset(
-                              item['image'],
-                              fit: BoxFit.cover,
-                              width: double.infinity,
-                            ),
+      body: Column(
+        children: [
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SingleChildScrollView(
+                child: StaggeredGrid.count(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 8,
+                  crossAxisSpacing: 8,
+                  children: items.map((item) {
+                    return StaggeredGridTile.count(
+                      crossAxisCellCount: item['type'] == 'ads' ? 2 : 1,
+                      mainAxisCellCount: item['type'] == 'ads' ? 1 : 1.5,
+                      child: GestureDetector(
+                        onTap: () {
+                          if (item['type'] == 'product') _onProductTap(item);
+                        },
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          elevation: 0,
+                          color: item['type'] == 'ads'
+                              ? Colors.orangeAccent
+                              : Colors.transparent,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(10),
+                                    bottom: Radius.circular(10),
+                                  ),
+                                  child: Image.asset(
+                                    item['image'],
+                                    fit: BoxFit.cover,
+                                    width: double.infinity,
+                                  ),
+                                ),
+                              ),
+                              if (item['type'] == 'product') ...[
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 5.0, bottom: 1.0),
+                                  child: Text(
+                                    item['name'],
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                                Text(
+                                  item['price'],
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ],
                           ),
                         ),
-                        if (item['type'] == 'product') ...[
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(top: 5.0, bottom: 1.0),
-                            child: Text(
-                              item['name'],
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                          Text(
-                            item['price'],
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ],
-                    ),
-                  ),
+                      ),
+                    );
+                  }).toList(),
                 ),
-              );
-            }).toList(),
+              ),
+            ),
           ),
-        ),
+          // Display the banner ad at the bottom
+          if (_isBannerAdLoaded)
+            Container(
+              alignment: Alignment.center,
+              width: _bannerAd!.size.width.toDouble(),
+              height: _bannerAd!.size.height.toDouble(),
+              child: AdWidget(ad: _bannerAd!),
+            ),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
