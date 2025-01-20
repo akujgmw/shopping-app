@@ -58,7 +58,6 @@ class _CartPageState extends State<CartPage> {
                 await DatabaseHelper.instance.deleteCartItem(itemId);
                 _loadCartItems();
                 _showSuccessDialog();
-                // Here, you can also implement the logic to process the checkout for the specific item
               },
               child: const Text('Yes'),
             ),

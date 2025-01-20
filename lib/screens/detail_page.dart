@@ -215,7 +215,6 @@ class _DetailPageState extends State<DetailPage> {
                       ),
                     ),
                     const SizedBox(height: 24),
-
                     Text(
                       item['name'],
                       style: const TextStyle(
@@ -225,7 +224,6 @@ class _DetailPageState extends State<DetailPage> {
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 12),
-
                     Text(
                       item['price'],
                       style: const TextStyle(
@@ -236,7 +234,6 @@ class _DetailPageState extends State<DetailPage> {
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 12),
-
                     StreamBuilder<QuerySnapshot>(
                       stream: FirebaseFirestore.instance
                           .collection('reviews')
@@ -296,8 +293,6 @@ class _DetailPageState extends State<DetailPage> {
                       },
                     ),
                     const SizedBox(height: 16),
-
-                    // Product Description
                     Text(
                       item['description'],
                       style: const TextStyle(
@@ -308,7 +303,6 @@ class _DetailPageState extends State<DetailPage> {
                       textAlign: TextAlign.justify,
                     ),
                     const SizedBox(height: 16),
-
                     const Text(
                       'User Reviews',
                       style: TextStyle(
@@ -317,7 +311,6 @@ class _DetailPageState extends State<DetailPage> {
                       ),
                     ),
                     const SizedBox(height: 16),
-
                     StreamBuilder<QuerySnapshot>(
                       stream: FirebaseFirestore.instance
                           .collection('reviews')
@@ -387,8 +380,6 @@ class _DetailPageState extends State<DetailPage> {
                         );
                       },
                     ),
-
-                    // Elegant Comment Box
                     Container(
                       decoration: BoxDecoration(
                         color: Colors.grey[100],
@@ -465,8 +456,6 @@ class _DetailPageState extends State<DetailPage> {
               ),
             ),
             const SizedBox(height: 16),
-
-            // Add to Cart and Checkout Buttons
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
@@ -485,7 +474,6 @@ class _DetailPageState extends State<DetailPage> {
               ),
               child: Row(
                 children: [
-                  // Add to Cart Button
                   Expanded(
                     child: InkWell(
                       onTap: () {
@@ -532,8 +520,6 @@ class _DetailPageState extends State<DetailPage> {
                     ),
                   ),
                   const SizedBox(width: 16),
-
-                  // Checkout Button
                   Expanded(
                     child: InkWell(
                       onTap: () {

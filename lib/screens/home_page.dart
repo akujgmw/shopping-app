@@ -15,25 +15,21 @@ class _HomePageState extends State<HomePage> {
   BannerAd? _bannerAd;
   bool _isBannerAdLoaded = false;
 
-  // Test Ad Unit ID for Banner Ads
   final String adUnitId = 'ca-app-pub-3940256099942544/9214589741';
 
   @override
   void initState() {
     super.initState();
 
-    // Request notification permissions
     AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
       if (!isAllowed) {
         AwesomeNotifications().requestPermissionToSendNotifications();
       }
     });
 
-    // Load the banner ad
     _loadBannerAd();
   }
 
-  // Method to load the banner ad
   void _loadBannerAd() {
     _bannerAd = BannerAd(
       size: AdSize.banner,
@@ -55,11 +51,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void dispose() {
-    _bannerAd?.dispose(); // Dispose of the banner ad
+    _bannerAd?.dispose();
     super.dispose();
   }
 
-  // List of items to display in the grid
   final List<Map<String, dynamic>> items = [
     {
       'id': 0,
@@ -142,7 +137,6 @@ class _HomePageState extends State<HomePage> {
     },
   ];
 
-  // Handle bottom navigation bar item taps
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -154,7 +148,6 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  // Handle product item taps
   void _onProductTap(Map<String, dynamic> item) {
     Navigator.pushNamed(context, '/detail', arguments: item);
   }
@@ -254,7 +247,6 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          // Display the banner ad at the bottom
           if (_isBannerAdLoaded)
             Container(
               alignment: Alignment.center,

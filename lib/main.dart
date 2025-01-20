@@ -9,12 +9,12 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:shopping_app/screens/login_page.dart';
 import 'package:shopping_app/screens/register_page.dart';
 import 'package:shopping_app/screens/settings_page.dart';
-// import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  // await MobileAds.instance.initialize();
+  await MobileAds.instance.initialize();
   AwesomeNotifications().initialize(
     'resource://drawable/ic_notification',
     [
