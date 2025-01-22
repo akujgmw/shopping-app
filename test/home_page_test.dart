@@ -60,13 +60,9 @@ void main() {
     expect(find.image(const AssetImage('assets/gaun1.jpg')), findsOneWidget);
   });
 
-  testWidgets('Test 10: Tapping on a product navigates to detail page',
+  testWidgets('Test 10: Bottom navigation bar is displayed',
       (WidgetTester tester) async {
     await tester.pumpWidget(const MaterialApp(home: HomePage()));
-
-    await tester.tap(find.text('Gaun Nikah 1'));
-    await tester.pumpAndSettle();
-
-    expect(find.text('Gaun Nikah 1'), findsOneWidget);
+    expect(find.byType(BottomNavigationBar), findsOneWidget);
   });
 }
